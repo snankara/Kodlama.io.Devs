@@ -13,7 +13,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\LanguageTechnologies\Constants\" />
+    <Folder Include="Features\LanguageTechnologies\Rules\" />
     <Folder Include="Features\ProgrammingLanguages\Constants\" />
+    <Folder Include="Features\UserInformations\Constants\" />
+    <Folder Include="Features\UserInformations\Models\" />
+    <Folder Include="Features\UserInformations\Rules\" />
+    <Folder Include="Features\UserInformations\Queries\" />
+    <Folder Include="Features\Users\Constants\" />
+    <Folder Include="Features\Users\Models\" />
+    <Folder Include="Features\Users\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

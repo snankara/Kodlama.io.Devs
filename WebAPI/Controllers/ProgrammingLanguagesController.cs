@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
             return Ok( result);
         }
 
-        [HttpPatch("delete/{Id}")]
+        [HttpPost("delete/{Id}")]
         public async Task<IActionResult> Delete([FromRoute] DeleteProgrammingLanguageCommand deleteProgrammingLanguageCommand)
         {
             DeletedProgrammingLanguageDto result = await Mediator.Send(deleteProgrammingLanguageCommand);

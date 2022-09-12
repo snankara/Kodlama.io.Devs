@@ -1,10 +1,12 @@
 using Application;
 using Persistence;
 using Core.CrossCuttingConcerns.Exceptions;
+using Core.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSecurityServices(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddHttpContextAccessor();
@@ -15,6 +17,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -24,8 +27,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-if (app.Environment.IsProduction())
-    app.ConfigureCustomExceptionMiddleware();
+//if (app.Environment.IsProduction())
+//    app.ConfigureCustomExceptionMiddleware();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

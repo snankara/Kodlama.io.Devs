@@ -11,6 +11,8 @@ namespace Domain.Entities
     {
         public string Name { get; set; }
 
+        public List<LanguageTechnology> LanguageTechnologies { get; set; }
+
         public ProgrammingLanguage(){}
 
         public ProgrammingLanguage(int id, string name): this()

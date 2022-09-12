@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Brands.Profiles
+namespace Application.Features.ProgrammingLanguages.Profiles
 {
     public class MappingProfiles : Profile
     {
