@@ -1,8 +1,8 @@
-﻿using Application.Features.ProgrammingLanguages.Commands.CreateProgrammingLanguage;
-using Application.Features.ProgrammingLanguages.Dtos;
-using Application.Features.Users.Commands.UserLogin;
-using Application.Features.Users.Commands.UserRegister;
-using Application.Features.Users.Dtos;
+﻿using Application.Features.Auths.Commands.Login;
+using Application.Features.Auths.Commands.Register;
+using Application.Features.Auths.Dtos;
+using Core.Security.Dtos;
+using Core.Security.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,17 +13,37 @@ namespace WebAPI.Controllers
     public class AuthController : BaseController
     {
         [HttpPost("register")]
-        public async Task<IActionResult> Add([FromBody] UserRegisterCommand userRegisterCommand)
+        public async Task<IActionResult> Register([FromBody] UserForRegisterDto userForRegisterDto)
         {
-            UserRegisteredDto result = await Mediator.Send(userRegisterCommand);
-            return Ok(result);
+            RegisterCommand registerCommand = new()
+            {
+                UserForRegisterDto = userForRegisterDto,
+                IpAddress = GetIpAddress()
+            };
+
+            RegisteredDto result = await Mediator.Send(registerCommand);
+            SetRefreshTokenToCookie(result.RefreshToken);
+
+            return Created("", result.AccessToken);
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Add([FromBody] UserLoginCommand userLoginCommand)
+        public async Task<IActionResult> Login([FromBody] UserForLoginDto userForLoginDto)
         {
-            UserLoggedInDto result = await Mediator.Send(userLoginCommand);
-            return Ok(result);
+            LoginCommand loginCommand = new()
+            {
+                UserForLoginDto = userForLoginDto,
+                IpAddress = GetIpAddress()
+            };
+
+            LoggedInDto result = await Mediator.Send(loginCommand);
+            return Ok(result.AccessToken);
+        }
+
+        private void SetRefreshTokenToCookie(RefreshToken refreshToken)
+        {
+            CookieOptions cookieOptions = new() { HttpOnly = true, Expires = DateTime.Now.AddDays(7) };
+            Response.Cookies.Append("refreshToken", refreshToken.Token, cookieOptions);
         }
     }
 }

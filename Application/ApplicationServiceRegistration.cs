@@ -1,5 +1,6 @@
-﻿using Application.Features.ProgrammingLanguages.Rules;
-using Application.Features.Users.Rules;
+﻿using Application.Features.Auths.Rules;
+using Application.Features.ProgrammingLanguages.Rules;
+using Application.Services.AuthService;
 using Application.Services.Repositories;
 using Core.Application.Pipelines.Authorization;
 using Core.Application.Pipelines.Validation;
@@ -25,7 +26,7 @@ namespace Application
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
             services.AddScoped<ProgrammingLanguageBusinessRules>();
-            services.AddScoped<UserBusinessRules>();
+            services.AddScoped<AuthBusinessRules>();
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
@@ -33,6 +34,7 @@ namespace Application
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CacheRemovingBehavior<,>));
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+            services.AddScoped<IAuthService, AuthManager>();
 
             return services;
 
