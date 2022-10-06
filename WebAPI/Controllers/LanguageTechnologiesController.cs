@@ -5,7 +5,6 @@ using Application.Features.LanguageTechnologies.Dtos;
 using Application.Features.LanguageTechnologies.Models;
 using Application.Features.LanguageTechnologies.Queries.GetListLanguageTechnology;
 using Application.Features.ProgrammingLanguages.Models;
-using Application.Features.ProgrammingLanguages.Queries.GetListProgrammingLanguage;
 using Core.Application.Requests;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
